@@ -1,10 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require 'simplecov'
-SimpleCov.start do
-  add_filter '/test'
-  coverage_dir 'test/coverage'
-end
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
 
 require 'minitest/autorun'
 require 'mongoid/minimal_tags'
