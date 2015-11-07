@@ -1,39 +1,58 @@
 [![Build Status](https://travis-ci.org/harrisbaird/mongoid-minimal_tags.svg?branch=master)](https://travis-ci.org/harrisbaird/mongoid-minimal_tags)
 [![Code Climate](https://codeclimate.com/github/harrisbaird/mongoid-minimal_tags/badges/gpa.svg)](https://codeclimate.com/github/harrisbaird/mongoid-minimal_tags)
 [![Test Coverage](https://codeclimate.com/github/harrisbaird/mongoid-minimal_tags/badges/coverage.svg)](https://codeclimate.com/github/harrisbaird/mongoid-minimal_tags/coverage)
+[![Inline docs](http://inch-ci.org/github/harrisbaird/mongoid-minimal_tags.svg?branch=master)](http://inch-ci.org/github/harrisbaird/mongoid-minimal_tags)
+
+---
 
 # Mongoid::MinimalTags
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mongoid/minimal_tags`. To experiment with that code, run `bin/console` for an interactive prompt.
+Mongoid::MinimalTags is a tiny gem for adding tagging support to [Mongoid](https://github.com/mongodb/mongoid) documents.
 
-TODO: Delete this and the text above, and describe your gem
+Multiple tag fields can be used, each with their own way of formatting.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add to your Gemfile:
 
 ```ruby
 gem 'mongoid-minimal_tags'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install mongoid-minimal_tags
-
 ## Usage
 
-TODO: Write usage instructions here
+Start by including the `Mongoid::MinimalTags` module and define your tag fields
+with the `tag_field` method.
 
-## Development
+```ruby
+class Document
+  include Mongoid::Document
+  include Mongoid::MinimalTags
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+  tag_field :tags
+  tag_field :upcase_tags, formatter: UpcaseFormatter.new
+end
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+You can define multiple tag fields, just ensure they have unique names.  
+Formatters can be defined on each tag field if needed, otherwise the default be used.
+
+## Searching
+The following scopes are also added for each tag field:
+`.any_*`, `.all_*`, `.without_any_*`  
+All scopes return a `Mongoid::Criteria` and can be chained.
+
+```ruby
+Document.any_tags(['a', 'b', 'c'])
+Document.all_tags(['a', 'b', 'c'])
+Document.without_any_tags(['a', 'b', 'c'])
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/mongoid-minimal_tags.
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Write your tests
+4. Commit your changes (`git commit -am 'Add some feature'`)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create new Pull Request
