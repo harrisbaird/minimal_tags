@@ -1,19 +1,5 @@
 require 'test_helper'
 
-class UpcaseFormatter
-  def normalize(tags)
-    tags.map(&:upcase)
-  end
-end
-
-class Document
-  include Mongoid::Document
-  include Mongoid::MinimalTags
-
-  tag_field :tags
-  tag_field :upcase_tags, formatter: UpcaseFormatter.new
-end
-
 describe Mongoid::MinimalTags do
   before do
     @doc1 = Document.create(tags: ['hello world', 'this is a test', 'hello-world'])
@@ -52,5 +38,10 @@ describe Mongoid::MinimalTags do
 
   it 'querying without_any_*' do
     assert_equal [@doc3], Document.without_any_tags(['hello world']).entries
+  end
+
+  it 'allows changing default_formatter' do
+    doc = ReverseDocument.create(tags: ['hello world'])
+    assert_equal ['dlrow olleh'], doc.tags
   end
 end

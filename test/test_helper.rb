@@ -22,3 +22,32 @@ class Minitest::Spec
     DatabaseCleaner.clean
   end
 end
+
+class UpcaseFormatter
+  def normalize(tags)
+    tags.map(&:upcase)
+  end
+end
+
+class ReverseFormatter
+  def normalize(tags)
+    tags.map(&:reverse)
+  end
+end
+
+class Document
+  include Mongoid::Document
+  include Mongoid::MinimalTags
+
+  tag_field :tags
+  tag_field :upcase_tags, formatter: UpcaseFormatter.new
+end
+
+Mongoid::MinimalTags.default_formatter = ReverseFormatter.new
+
+class ReverseDocument
+  include Mongoid::Document
+  include Mongoid::MinimalTags
+
+  tag_field :tags
+end
