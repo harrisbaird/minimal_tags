@@ -8,7 +8,7 @@ module Mongoid
 
     module ClassMethods
       ##
-      # Creates a tag field, index, query methods and a callback for tag
+      # Creates a tag field, index, search methods and a callback for tag
       # normalization on save.
       #
       # @example
@@ -25,14 +25,14 @@ module Mongoid
       #   doc == Document.any_tags(['HELLO WORLD']).first
       #   # => true
       #
-      # @param [String] field_name The field name to use in mongo and query methods
+      # @param [String] field_name The field name to use in mongo and searching methods
       # @param [Object] formatter The formatter to use, overriding the default
       def tag_field(field_name, formatter: MinimalTags.default_formatter)
         field field_name, type: Array, default: []
         index field_name => 1
 
-        # Create the scopes for querying tags
-        MinimalTags.query_types.each do |type, prefix|
+        # Create the scopes for searching tags
+        MinimalTags.search_types.each do |type, prefix|
           scope "#{prefix}_#{field_name}", lambda { |tags|
             criteria.send(type, field_name => formatter.normalize(tags))
           }

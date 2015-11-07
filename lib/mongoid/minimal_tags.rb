@@ -7,7 +7,7 @@ module Mongoid
     class << self
       attr_writer :default_formatter
 
-      DEFAULT_QUERY_TYPES = {
+      DEFAULT_SEARCH_TYPES = {
         all: 'all',
         in: 'any',
         nin: 'without_any'
@@ -17,8 +17,8 @@ module Mongoid
         @default_formatter ||= SimpleFormatter.new
       end
 
-      def query_types
-        @query_types ||= DEFAULT_QUERY_TYPES
+      def search_types
+        @search_types ||= DEFAULT_SEARCH_TYPES
       end
     end
   end
