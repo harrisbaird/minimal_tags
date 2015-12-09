@@ -5,7 +5,11 @@ rvm:
   - 2.2.3
 services:
   - mongodb
-before_install: gem install bundler -v 1.10.6
+  - postgresql
+before_install:
+  - gem install bundler -v 1.10.6
+before_script:
+  - psql -c 'create database minimal_tags;' -U postgres
 addons:
   code_climate:
     repo_token: 32212930c3d28b5f18f53b94b273de85659924850fc07c007ed87b852437c687
