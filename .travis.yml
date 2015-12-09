@@ -12,4 +12,4 @@ before_script:
   - psql -c 'create database minimal_tags;' -U postgres
 addons:
   code_climate:
-    repo_token: 32212930c3d28b5f18f53b94b273de85659924850fc07c007ed87b852437c687
+    repo_token: 3c954617ba40beceb056cc73b82e00a6dc1fa2193cda386dc6c2128bdd61a804
