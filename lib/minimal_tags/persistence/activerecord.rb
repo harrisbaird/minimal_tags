@@ -29,7 +29,7 @@ module MinimalTags
         # Create the scopes for searching tags
         TAG_SEARCH_TYPES.each do |prefix, operator|
           scope "#{prefix}_#{field_name}", lambda { |tags|
-            where("#{field_name} #{operator} ARRAY[?]::varchar[]", formatter.normalize(tags))
+            where("#{field_name} #{operator} ARRAY[?]", formatter.normalize(tags))
           }
         end
 

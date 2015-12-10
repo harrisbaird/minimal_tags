@@ -8,13 +8,13 @@ ActiveRecord::Base.establish_connection(
 )
 
 ActiveRecord::Migration.verbose = false
-ActiveRecord::Schema.define(:version => 1) do
+ActiveRecord::Schema.define(version: 1) do
   drop_table 'posts' if ActiveRecord::Base.connection.table_exists? 'posts'
 
   create_table :posts do |t|
-    t.string :tags, array: true, default: '{}'
-    t.string :upcase_tags, array: true, default: '{}'
-    t.string :reverse_tags, array: true, default: '{}'
+    t.text :tags, array: true, default: '{}'
+    t.text :upcase_tags, array: true, default: '{}'
+    t.text :reverse_tags, array: true, default: '{}'
   end
 end
 
