@@ -39,7 +39,7 @@ module MinimalTags
 
         # Normalize tags on save
         set_callback(:save, :before) do
-          tags = read_attribute(field_name)
+          tags = read_attribute(field_name) || []
           write_attribute(field_name, formatter.normalize(tags))
         end
       end

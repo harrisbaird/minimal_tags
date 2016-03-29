@@ -7,6 +7,7 @@ describe MinimalTags do
         @doc1 = model_class.create(tags: ['hello world', 'this is a test', 'hello-world'])
         @doc2 = model_class.create(tags: ['hello world', 'another test'])
         @doc3 = model_class.create(tags: ['something different'], upcase_tags: ['hello world'])
+        @doc4 = model_class.create(tags: nil)
       end
 
       after { model_class.delete_all }
@@ -28,6 +29,10 @@ describe MinimalTags do
 
       it 'runs user defined formatter on save' do
         assert_equal ['HELLO WORLD'], @doc3.upcase_tags
+      end
+
+      it 'handles nil values' do
+        assert_equal [], @doc4.tags
       end
 
       it 'querying any_*' do
