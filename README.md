@@ -52,7 +52,13 @@ end
 ```
 
 You can define multiple tag fields, just ensure they have unique names.  
-Formatters can be defined on each tag field if needed, otherwise the default be used.
+Formatters can be defined on each tag field if needed, otherwise the default, [MinimalTags::SimpleFormatter](https://github.com/harrisbaird/minimal_tags/blob/master/lib/minimal_tags/simple_formatter.rb) be used.
+
+### Changing the default formatter
+
+```ruby
+MinimalTags.default_formatter = UnderscoreTagFormatter.new
+```
 
 ## Searching
 The following scopes are also added for each tag field and can be chained:
