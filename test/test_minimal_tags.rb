@@ -43,6 +43,14 @@ describe MinimalTags do
         assert_equal [@doc2], model_class.all_tags(['hello world', 'another test']).entries
       end
 
+      it 'querying without_any_*' do
+        assert_equal [@doc3, @doc4], model_class.without_any_tags(['hello world', 'another test']).entries
+      end
+
+      it 'querying without_all_*' do
+        assert_equal [@doc1, @doc3, @doc4], model_class.without_all_tags(['hello world', 'another test']).entries
+      end
+
       it 'allows changing default_formatter' do
         MinimalTags.default_formatter = ReverseFormatter.new
         model_class.tag_field :reverse_tags

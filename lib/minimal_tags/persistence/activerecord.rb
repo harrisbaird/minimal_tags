@@ -31,6 +31,10 @@ module MinimalTags
           scope "#{prefix}_#{field_name}", lambda { |tags|
             where("#{field_name} #{operator} ARRAY[?]", formatter.normalize(tags))
           }
+
+          scope "without_#{prefix}_#{field_name}", lambda { |tags|
+            where.not("#{field_name} #{operator} ARRAY[?]", formatter.normalize(tags))
+          }
         end
 
         # Normalize tags on save

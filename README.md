@@ -56,11 +56,13 @@ Formatters can be defined on each tag field if needed, otherwise the default be 
 
 ## Searching
 The following scopes are also added for each tag field and can be chained:
-`.any_*`, `.all_*`
+`.any_*`, `.all_*`, `.without_any_*`, `.without_all_*`
 
 ```ruby
 Document.any_tags(['a', 'b', 'c'])
 Document.all_tags(['a', 'b', 'c'])
+Document.without_any_tags(['a', 'b', 'c'])
+Document.without_all_tags(['a', 'b', 'c'])
 ```
 
 ## Contributing

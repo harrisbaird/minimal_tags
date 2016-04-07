@@ -3,7 +3,9 @@ module MinimalTags
     module Mongoid
       TAG_SEARCH_TYPES = {
         all: 'all',
-        any: 'in'
+        any: 'in',
+        without_all: 'ne',
+        without_any: 'nin'
       }
 
       ##
