@@ -3,6 +3,10 @@ rvm:
   - 2.1.0
   - 2.2.3
   - 2.3.0
+gemfile:
+  - gemfiles/activerecord_41.gemfile
+  - gemfiles/activerecord_42.gemfile
+  - gemfiles/activerecord_50.gemfile
 services:
   - mongodb
   - postgresql
