@@ -17,3 +17,6 @@ before_script:
 addons:
   code_climate:
     repo_token: 3c954617ba40beceb056cc73b82e00a6dc1fa2193cda386dc6c2128bdd61a804
+matrix:
+  allow_failures:
+    - gemfile: gemfiles/activerecord_50.gemfile
