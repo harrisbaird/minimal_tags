@@ -7,8 +7,7 @@ module MinimalTags
 
     def included(base)
       ancestors = base.ancestors.collect(&:to_s)
-
-      base.instance_variable_set('@tag_fields', [])
+      base.send :extend, ClassMethods
 
       if ancestors.include?('Mongoid::Document')
         require 'minimal_tags/persistence/mongoid'
@@ -21,6 +20,12 @@ module MinimalTags
 
     def default_formatter
       @default_formatter ||= SimpleFormatter.new
+    end
+
+    module ClassMethods
+      def tag_fields
+        @tag_fields ||= []
+      end
     end
   end
 end

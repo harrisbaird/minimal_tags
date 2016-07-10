@@ -37,7 +37,7 @@ module MinimalTags
           }
         end
 
-        @tag_fields << field_name
+        tag_fields << field_name
 
         # Normalize tags on save
         set_callback(:save, :before) do
