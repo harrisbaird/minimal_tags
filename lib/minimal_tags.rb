@@ -8,6 +8,8 @@ module MinimalTags
     def included(base)
       ancestors = base.ancestors.collect(&:to_s)
 
+      base.instance_variable_set('@tag_fields', [])
+
       if ancestors.include?('Mongoid::Document')
         require 'minimal_tags/persistence/mongoid'
         base.send :extend, Persistence::Mongoid

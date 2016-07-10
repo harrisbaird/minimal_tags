@@ -39,6 +39,8 @@ module MinimalTags
           }
         end
 
+        @tag_fields << field_name
+
         # Normalize tags on save
         set_callback(:save, :before) do
           tags = read_attribute(field_name) || []
