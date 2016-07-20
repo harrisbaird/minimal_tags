@@ -15,6 +15,10 @@ module MinimalTags
       elsif ancestors.include?('ActiveRecord::Base')
         require 'minimal_tags/persistence/activerecord'
         base.send :extend, Persistence::Activerecord
+      elsif ancestors.include?('Sequel::Model')
+        require 'minimal_tags/persistence/sequel'
+        base.plugin :hook_class_methods
+        base.send :extend, Persistence::Sequel
       end
     end
 

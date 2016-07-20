@@ -1,9 +1,9 @@
 module MinimalTags
   module Persistence
-    module Activerecord
+    module Sequel
       TAG_SEARCH_TYPES = {
-        all: '@>',
-        any: '&&'
+        all: :contains,
+        any: :overlaps
       }
 
       ##
@@ -11,7 +11,7 @@ module MinimalTags
       # normalization on save.
       #
       # @example
-      #   class Post < ActiveRecord::Base
+      #   class Post < Sequel::Model
       #     include MinimalTags
       #
       #     tag_field :tags
@@ -28,21 +28,25 @@ module MinimalTags
       def tag_field(field_name, formatter: MinimalTags.default_formatter)
         # Create the scopes for searching tags
         TAG_SEARCH_TYPES.each do |prefix, operator|
-          scope "#{prefix}_#{field_name}", lambda { |tags|
-            where("#{field_name} #{operator} ARRAY[?]", formatter.normalize(tags))
-          }
+          define_singleton_method "#{prefix}_#{field_name}" do |tags|
+            formatted_tags = formatter.normalize(tags)
+            query = ::Sequel.pg_array_op(field_name).send(operator, formatted_tags)
+            where(query)
+          end
 
-          scope "without_#{prefix}_#{field_name}", lambda { |tags|
-            where.not("#{field_name} #{operator} ARRAY[?]", formatter.normalize(tags))
-          }
+          define_singleton_method "without_#{prefix}_#{field_name}" do |tags|
+            formatted_tags = formatter.normalize(tags)
+            query = ::Sequel.pg_array_op(field_name).send(operator, formatted_tags)
+            exclude(query)
+          end
         end
 
         tag_fields << field_name
 
-        # Normalize tags on save
-        set_callback(:save, :before) do
-          tags = read_attribute(field_name) || []
-          write_attribute(field_name, formatter.normalize(tags))
+        # # Normalize tags on save
+        before_save do |*args|
+          tags = send(field_name) || []
+          send("#{field_name}=", formatter.normalize(tags))
         end
       end
     end

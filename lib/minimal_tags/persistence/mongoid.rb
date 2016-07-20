@@ -13,17 +13,17 @@ module MinimalTags
       # normalization on save.
       #
       # @example
-      #   class Posts
+      #   class Post
       #     include Mongoid::Document
       #     include MinimalTags
       #
       #     tag_field :tags
       #   end
       #
-      #   doc = Posts.create(tags: ['hello world', 'this is a test']).tags
+      #   doc = Post.create(tags: ['hello world', 'this is a test']).tags
       #   # => ['hello-world', 'this-is-a-test']
       #
-      #   doc == Posts.any_tags(['HELLO WORLD']).first
+      #   doc == Post.any_tags(['HELLO WORLD']).first
       #   # => true
       #
       # @param [String] field_name The field name to use in mongo and searching methods

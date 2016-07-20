@@ -1,16 +1,20 @@
 require 'test_helper'
 
 describe MinimalTags do
-  [MongoidModel, ActiveRecordModel].each do |model_class|
+  [ActiveRecordModel, MongoidModel, SequelModel].each do |model_class|
     describe model_class do
       before do
+        if model_class.ancestors.include?(Sequel::Model)
+          model_class.dataset.delete
+        else
+          model_class.delete_all
+        end
+
         @doc1 = model_class.create(tags: ['hello world', 'this is a test', 'hello-world'])
         @doc2 = model_class.create(tags: ['hello world', 'another test'])
         @doc3 = model_class.create(tags: ['something different'], upcase_tags: ['hello world'])
         @doc4 = model_class.create(tags: nil)
       end
-
-      after { model_class.delete_all }
 
       it 'adds tag_field class method' do
         assert_respond_to model_class, :tag_field

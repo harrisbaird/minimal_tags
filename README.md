@@ -36,6 +36,28 @@ end
 
 ```
 
+### Sequel
+
+Add the following migration for each tag field you want.
+
+```ruby
+Sequel.migration do
+  change do
+    add_column :posts, :tags, 'text[]', default: [], null: false
+    add_index :posts, :tags, type: :gin
+  end
+end
+
+```
+
+Also enable the `pg_array` and `pg_array_ops` extensions:
+
+```ruby
+DB = Sequel.connect('postgres://...')
+DB.extension :pg_array
+Sequel.extension :pg_array_ops
+```
+
 ## Usage
 
 Start by including the `MinimalTags` module and define your tag fields
