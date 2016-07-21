@@ -6,6 +6,11 @@ module MinimalTags
         any: :overlaps
       }
 
+      TAG_PREFIX_TYPES = {
+        where: '',
+        exclude: 'without_'
+      }
+
       ##
       # Creates a tag field, index, search methods and a callback for tag
       # normalization on save.
@@ -28,16 +33,12 @@ module MinimalTags
       def tag_field(field_name, formatter: MinimalTags.default_formatter)
         # Create the scopes for searching tags
         TAG_SEARCH_TYPES.each do |prefix, operator|
-          define_singleton_method "#{prefix}_#{field_name}" do |tags|
-            formatted_tags = formatter.normalize(tags)
-            query = ::Sequel.pg_array_op(field_name).send(operator, formatted_tags)
-            where(query)
-          end
-
-          define_singleton_method "without_#{prefix}_#{field_name}" do |tags|
-            formatted_tags = formatter.normalize(tags)
-            query = ::Sequel.pg_array_op(field_name).send(operator, formatted_tags)
-            exclude(query)
+          TAG_PREFIX_TYPES.each do |method, without_prefix|
+            define_singleton_method "#{without_prefix}#{prefix}_#{field_name}" do |tags|
+              formatted_tags = formatter.normalize(tags)
+              query = ::Sequel.pg_array_op(field_name).send(operator, formatted_tags)
+              send(method, query)
+            end
           end
         end
 
