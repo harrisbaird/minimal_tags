@@ -7,9 +7,11 @@
 
 # MinimalTags
 
-MinimalTags is a tiny gem for adding tagging support to [Mongoid](https://github.com/mongodb/mongoid)  and ActiveRecord (Currently only Postgresql).
+MinimalTags is a tiny gem for adding tagging support to [Mongoid](https://github.com/mongodb/mongoid), [ActiveRecord](https://github.com/rails/rails/tree/master/activerecord) and [Sequel](http://sequel.jeremyevans.net/).
 
 Multiple tag fields can be used, each with their own way of formatting.
+
+**Please Note: ActiveRecord and Sequel both require PostgreSQL.**
 
 ## Installation
 
@@ -74,7 +76,7 @@ end
 ```
 
 You can define multiple tag fields, just ensure they have unique names.  
-Formatters can be defined on each tag field if needed, otherwise the default, [MinimalTags::SimpleFormatter](https://github.com/harrisbaird/minimal_tags/blob/master/lib/minimal_tags/simple_formatter.rb) be used.
+Formatters can be defined on each tag field if needed, otherwise the default, [MinimalTags::SimpleFormatter](https://github.com/harrisbaird/minimal_tags/blob/master/lib/minimal_tags/simple_formatter.rb) will be used.
 
 ### Changing the default formatter
 
