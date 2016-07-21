@@ -1,10 +1,15 @@
 require 'test_helper'
 
 describe MinimalTags do
-  [ActiveRecordModel, MongoidModel, SequelModel].each do |model_class|
+  possible_models = %w(ActiveRecordModel MongoidModel SequelModel)
+  models = possible_models.collect do |m|
+    const_get(m) if Kernel.const_defined?(m)
+  end.compact
+
+  models.each do |model_class|
     describe model_class do
       before do
-        if model_class.ancestors.include?(Sequel::Model)
+        if defined?(Sequel::Model) && model_class.ancestors.include?(Sequel::Model)
           model_class.dataset.delete
         else
           model_class.delete_all

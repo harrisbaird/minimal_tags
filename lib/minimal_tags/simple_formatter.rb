@@ -1,6 +1,7 @@
 module MinimalTags
-  # A very simple tag formatter using ActiveSupport's parameterize.
+  # A very simple tag formatter.
   # You should create your own rather than using this.
+  # The Stringex gem works well - https://github.com/rsl/stringex
   class SimpleFormatter
     ##
     # Returns an array of normalized tags
@@ -9,7 +10,7 @@ module MinimalTags
     #
     # @return [Array] Unique, parameterized tags
     def normalize(tags)
-      tags.map(&:parameterize).uniq
+      tags.map { |tag| tag.downcase.gsub(/\s/, '-') }.uniq
     end
   end
 end

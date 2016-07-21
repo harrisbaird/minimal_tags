@@ -18,4 +18,9 @@ class ReverseFormatter
   end
 end
 
-Dir[File.dirname(__FILE__) + '/support/*.rb'].each { |file| require file }
+Dir[File.dirname(__FILE__) + '/support/*.rb'].each do |file|
+  begin
+   require file
+ rescue LoadError
+ end
+end
