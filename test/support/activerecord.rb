@@ -9,6 +9,8 @@ ActiveRecord::Base.establish_connection(
 
 ActiveRecord::Migration.verbose = false
 ActiveRecord::Schema.define(version: 1) do
+  drop_table :posts if table_exists? :posts
+
   create_table :posts do |t|
     t.text :tags, array: true, default: '{}'
     t.text :upcase_tags, array: true, default: '{}'

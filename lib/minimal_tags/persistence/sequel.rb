@@ -35,8 +35,9 @@ module MinimalTags
         TAG_SEARCH_TYPES.each do |prefix, operator|
           TAG_PREFIX_TYPES.each do |method, without_prefix|
             define_singleton_method "#{without_prefix}#{prefix}_#{field_name}" do |tags|
-              formatted_tags = formatter.normalize(tags)
-              query = ::Sequel.pg_array_op(field_name).send(operator, formatted_tags)
+              normalized_tags = formatter.normalize(tags)
+              normalized_tags = ::Sequel.pg_array(normalized_tags, :text)
+              query = ::Sequel.pg_array_op(field_name).send(operator, normalized_tags)
               send(method, query)
             end
           end
