@@ -28,8 +28,12 @@ describe MinimalTags do
       it 'adds methods for each defined tag field' do
         assert_respond_to model_class, :all_tags
         assert_respond_to model_class, :any_tags
+        assert_respond_to model_class, :without_all_tags
+        assert_respond_to model_class, :without_any_tags
         assert_respond_to model_class, :all_upcase_tags
         assert_respond_to model_class, :any_upcase_tags
+        assert_respond_to model_class, :without_all_upcase_tags
+        assert_respond_to model_class, :without_any_upcase_tags
       end
 
       it 'runs default formatter on save' do
