@@ -95,6 +95,22 @@ Document.without_any_tags(['a', 'b', 'c'])
 Document.without_all_tags(['a', 'b', 'c'])
 ```
 
+### Partial tags
+
+**Sequel only for now**
+
+Find with partial tag match:
+
+```ruby
+Document.partial_tags('hello').all
+```
+
+Array of matching tags:
+
+```ruby
+Document.partial_tags('hello').select_map(:mt_tags)
+```
+
 ## Contributing
 
 1. Fork it

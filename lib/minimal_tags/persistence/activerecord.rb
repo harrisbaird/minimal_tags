@@ -23,7 +23,7 @@ module MinimalTags
       #   doc == Post.any_tags(['HELLO WORLD']).first
       #   # => true
       #
-      # @param [String] field_name The field name to use in mongo and searching methods
+      # @param [String] field_name The field name to use
       # @param [Object] formatter The formatter to use, overriding the default
       def tag_field(field_name, formatter: MinimalTags.default_formatter)
         # Create the scopes for searching tags

@@ -75,6 +75,15 @@ describe MinimalTags do
         assert_equal ['dlrow olleh'], doc.reverse_tags
         MinimalTags.default_formatter = MinimalTags::SimpleFormatter.new
       end
+
+      if defined?(Sequel::Model) && model_class == SequelModel
+        it 'allows searching by partial tag' do
+          assert_equal [@doc1, @doc2], model_class.partial_tags('hello').all
+          assert_equal ['hello-world'], model_class.partial_tags('hello')
+                                                   .distinct(:mt_tags)
+                                                   .select_map(:mt_tags)
+        end
+      end
     end
   end
 end
