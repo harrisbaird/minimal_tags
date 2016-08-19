@@ -68,6 +68,10 @@ describe MinimalTags do
         assert_equal [], model_class.any_tags([]).entries
       end
 
+      it 'allows chaining' do
+        assert_equal [@doc1], model_class.any_tags(['hello world']).without_any_tags(['another test']).entries
+      end
+
       it 'allows changing default_formatter' do
         MinimalTags.default_formatter = ReverseFormatter.new
         model_class.tag_field :reverse_tags

@@ -34,7 +34,7 @@ module MinimalTags
         # Create the scopes for searching tags
         TAG_SEARCH_TYPES.each do |prefix, operator|
           TAG_PREFIX_TYPES.each do |method, without_prefix|
-            define_singleton_method "#{without_prefix}#{prefix}_#{field_name}" do |tags|
+            def_dataset_method "#{without_prefix}#{prefix}_#{field_name}" do |tags|
               normalized_tags = formatter.normalize(tags)
               normalized_tags = ::Sequel.pg_array(normalized_tags, :text)
               query = ::Sequel.pg_array_op(field_name).send(operator, normalized_tags)
